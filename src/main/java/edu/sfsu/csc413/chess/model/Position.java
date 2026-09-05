@@ -53,7 +53,7 @@ public record Position(int file, int rank) {
             );
         }
         file = (int) algebraic.charAt(0) - 'a';
-        rank = (int) algebraic.charAt(1) - 1;
+        rank = (int) algebraic.charAt(1) - '1';
         // Construct object (if not valid file and rank, it will throw error)
         return new Position(file, rank);
     }
