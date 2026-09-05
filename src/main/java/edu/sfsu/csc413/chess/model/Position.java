@@ -59,6 +59,9 @@ public record Position(int file, int rank) {
     }
 
     public Position offsetOrNull(int fileDelta, int rankDelta) {
+        if (isOnBoard(fileDelta,rankDelta)) {
+            return new Position(fileDelta, rankDelta);
+        }
         return null;
     }
 }
