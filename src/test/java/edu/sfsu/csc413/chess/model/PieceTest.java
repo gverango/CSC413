@@ -11,10 +11,10 @@ import static org.junit.jupiter.api.Assertions.assertEquals;
 class PieceTest {
 
     /** The one line in this file that knows how a piece is constructed. */
-    private static Piece piece(Color color, PieceType type) {
+
+private static Piece piece(Color color, PieceType type) {
         return new Piece(color, type);
     }
-
     @Test
     @DisplayName("a white piece prints as its uppercase letter")
     void whiteSymbolIsUppercase() {
