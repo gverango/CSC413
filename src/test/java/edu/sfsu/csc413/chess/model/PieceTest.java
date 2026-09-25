@@ -1,5 +1,6 @@
 package edu.sfsu.csc413.chess.model;
 
+import edu.sfsu.csc413.chess.factory.PieceFactory;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 
@@ -12,7 +13,7 @@ class PieceTest {
 
     /** The one line in this file that knows how a piece is constructed. */
     private static Piece piece(Color color, PieceType type) {
-        return new Piece(color, type);
+        return PieceFactory.create(type, color);
     }
 
     @Test
