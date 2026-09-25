@@ -29,6 +29,7 @@ public abstract class Piece {
         char letter = type.symbol();
         return color == Color.WHITE ? letter : Character.toLowerCase(letter);
     }
+
     /**
      * Every move this piece could make from {@code from}, ignoring whether
      * it would leave its own king in check.
@@ -40,6 +41,11 @@ public abstract class Piece {
 //    protected List<Move> steppingMoves(Board board, Position from, int[][] offsets)
 //
 
+
+    @Override
+    public String toString() {
+        return String.valueOf(symbol());
+    }
 
 }
 
