@@ -31,7 +31,65 @@ public class Pawn extends Piece {
 
     @Override
     public List<Move> pseudoLegalMoves(Board board, Position from) {
-        throw new UnsupportedOperationException("M2: implement Pawn.pseudoLegalMoves");
+        List<Move> result = new ArrayList<>();
+        int file = from.file();
+        int nextRank = from.rank() + color().pawnDirection();
+
+        // Move forward one square
+        if (Position.isOnBoard(file, nextRank)) {
+            Position oneStep = new Position(file, nextRank);
+
+            if (board.isEmpty(oneStep)) {
+                addMove(result, from, oneStep, null, color().promotionRank());
+
+                // Moves forward two squares (ONLY from the starting rank)
+                if (from.rank() == color().pawnStartRank()) {
+                    Position twoSteps = new Position(file, nextRank + color().pawnDirection());
+                    if (board.isEmpty(twoSteps)) {
+                        result.add(Move.quiet(from, twoSteps, this));
+                    }
+                }
+            }
+        }
+
+        // Capture diagonally
+        tryCapture(result, board, from, file - 1, nextRank, color().promotionRank()); //left
+        tryCapture(result, board, from, file + 1, nextRank, color().promotionRank()); //right
+
+        return result;
+    }
+    /** Adds a capture onto (file, rank) if an enemy piece is standing there. */
+    private void tryCapture(List<Move> result, Board board, Position from,
+                            int file, int rank, int promotionRank) {
+        if (!Position.isOnBoard(file, rank)) {
+            return;
+        }
+        Position to = new Position(file, rank);
+        if (board.isEmpty(to)) {
+            return;
+        }
+        Piece target = board.pieceAt(to);
+        if (target.color() == color()) {
+            return;
+        }
+        addMove(result, from, to, target, promotionRank);
+    }
+
+    /**
+     * Adds one move to the list. If the pawn lands on the last rank,
+     * it adds four moves instead: one for each piece it could become.
+     * {@code captured} is null when nothing is captured.
+     */
+    private void addMove(List<Move> result, Position from, Position to, Piece captured, int promotionRank) {
+        if (to.rank() == promotionRank) {
+            for (PieceType choice : PROMOTION_CHOICES) {
+                result.add(Move.promotion(from, to, this, captured, choice));
+            }
+        } else if (captured == null) {
+            result.add(Move.quiet(from, to, this));
+        } else {
+            result.add(Move.capture(from, to, this, captured));
+        }
     }
 
     /**
@@ -47,6 +105,8 @@ public class Pawn extends Piece {
      */
     @Override
     public boolean attacks(Board board, Position from, Position target) {
-        return attacks(board, from, target);
+        boolean oneRankAhead = target.rank() == from.rank() +color().pawnDirection();
+        boolean oneFileAside = Math.abs(target.file() - from.file()) == 1;
+        return oneRankAhead && oneFileAside;
     }
 }
