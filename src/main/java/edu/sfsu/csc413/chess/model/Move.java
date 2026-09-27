@@ -26,29 +26,38 @@ public record Move(Position from, Position to, Piece moved, Piece captured, Piec
      * A move to an empty square.
      */
     public static Move quiet(Position from, Position to, Piece moved) {
-        throw new UnsupportedOperationException("M2: implement Move.quiet");
+        return new Move(from, to, moved, null, null);
     }
 
     /**
      * A move that removes an enemy piece from the destination square.
      */
     public static Move capture(Position from, Position to, Piece moved, Piece captured) {
-        throw new UnsupportedOperationException("M2: implement Move.capture");
+        return new Move(from, to, moved, captured, null);
     }
 
     /**
      * A pawn reaching the far rank and becoming {@code promotesTo}.
      */
     public static Move promotion(Position from, Position to, Piece moved, Piece captured, PieceType promotesTo) {
-        throw new UnsupportedOperationException("M2: implement Move.promotion");
+        return new Move(from, to, moved, captured, promotesTo);
     }
-
-    public boolean isCapture() {
-        throw new UnsupportedOperationException("M2: implement Move.isCapture");
+//Each is a one-line null check on the relevant field. A move is a capture
+// when there is a captured piece, and a promotion when there is a promotesTo type.
+// In a record, you read fields through their accessor methods (captured(), promotesTo())
+// or by the bare field name inside the record.
+    public boolean isCapture(){
+        if (this.captured != null && this.promotesTo == null){
+            return true;
+        }
+        return false;
     }
 
     public boolean isPromotion() {
-        throw new UnsupportedOperationException("M2: implement Move.isPromotion");
+        if (this.captured != null && this.promotesTo != null){
+            return true;
+        }
+        return false;
     }
 
     /**
@@ -57,6 +66,10 @@ public record Move(Position from, Position to, Piece moved, Piece captured, Piec
      */
     @Override
     public String toString() {
-        throw new UnsupportedOperationException("M2: implement Move.toString");
+        String s = from.toString() + to.toString() ;
+        if (isPromotion()) {
+            s += promotesTo.toString().toLowerCase();
+        }
+        return s;
     }
 }
