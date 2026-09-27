@@ -47,17 +47,11 @@ public record Move(Position from, Position to, Piece moved, Piece captured, Piec
 // In a record, you read fields through their accessor methods (captured(), promotesTo())
 // or by the bare field name inside the record.
     public boolean isCapture(){
-        if (this.captured != null && this.promotesTo == null){
-            return true;
-        }
-        return false;
+        return captured != null;
     }
 
     public boolean isPromotion() {
-        if (this.captured != null && this.promotesTo != null){
-            return true;
-        }
-        return false;
+        return promotesTo != null;
     }
 
     /**
