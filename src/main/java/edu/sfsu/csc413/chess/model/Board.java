@@ -40,18 +40,14 @@ public class Board {
     }
 
     // lift the piece off `from`, set it down on `to`
-    public void apply(Move move){
-        Position from = move.from();
-        Position to = move.to();
-        squares[from.rank()][from.file()] = null;
-        squares[to.rank()][to.file()] = move.moved();
+    public void apply(Move move) {
+        place(move.from(), null);
+        place(move.to(), move.moved());
     }
     // put `moved` back on `from`; put `captured` (or null) back on `to`
     public void undo(Move move) {
-        Position from = move.from();
-        Position to = move.to();
-        squares[from.rank()][from.file()] = move.moved();
-        squares[to.rank()][to.file()] = move.captured();
+        place(move.from(), move.moved());
+        place(move.to(), move.captured());
     }
 
     // FEN placement field eg. rnbqkbnr/pppppppp/8/8/8/8/PPPPPPPP/RNBQKBNR
