@@ -60,7 +60,7 @@ public class Game {
      * out would let any caller rewrite the game's past.
      */
     public List<Move> history() {
-        return List.copyOf(history);     // an unmodifiable snapshot
+        return List.copyOf(history);
     }
     /**
      * Every move the side to move may play right now.
