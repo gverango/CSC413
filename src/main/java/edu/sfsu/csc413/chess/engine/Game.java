@@ -4,6 +4,7 @@ import edu.sfsu.csc413.chess.factory.BoardFactory;
 import edu.sfsu.csc413.chess.model.Board;
 import edu.sfsu.csc413.chess.model.Color;
 import edu.sfsu.csc413.chess.model.Move;
+import edu.sfsu.csc413.chess.model.Position;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -59,7 +60,7 @@ public class Game {
      * out would let any caller rewrite the game's past.
      */
     public List<Move> history() {
-        return history;
+        return List.copyOf(history);     // an unmodifiable snapshot
     }
     /**
      * Every move the side to move may play right now.
@@ -70,7 +71,11 @@ public class Game {
      * or its callers.
      */
     public List<Move> legalMoves() {
-        throw new UnsupportedOperationException("M3: implement Game.legalMoves");
+        List<Move> moves = new ArrayList<>();
+        for (Position from : board.positionsOf(sideToMove)){
+            moves.addAll(board.pieceAt(from).pseudoLegalMoves(board,from));
+        }
+        return moves;
     }
 
     /**
