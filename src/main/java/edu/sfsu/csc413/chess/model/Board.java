@@ -10,7 +10,6 @@ public class Board {
     public Board() {
 
     }
-
     // Checks a position on board and returns Piece or null
     public Piece pieceAt(Position position){
         return squares[position.file()][position.rank()];
@@ -38,6 +37,21 @@ public class Board {
             }
         }
         return positions;
+    }
+
+    // lift the piece off `from`, set it down on `to`
+    public void apply(Move move){
+        Position from = move.from();
+        Position to = move.to();
+        squares[from.rank()][from.file()] = null;
+        squares[to.rank()][to.file()] = move.moved();
+    }
+    // put `moved` back on `from`; put `captured` (or null) back on `to`
+    public void undo(Move move) {
+        Position from = move.from();
+        Position to = move.to();
+        squares[from.rank()][from.file()] = move.moved();
+        squares[to.rank()][to.file()] = move.captured();
     }
 
     // FEN placement field eg. rnbqkbnr/pppppppp/8/8/8/8/PPPPPPPP/RNBQKBNR
