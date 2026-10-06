@@ -90,7 +90,7 @@ public class Game {
     public Optional<Move> findLegalMove(String notation) {
         for (Move move : legalMoves()) {
             if (move.toString().equalsIgnoreCase(notation)) {
-                return Optional.of(move);   // found it: box it up and return immediately
+                return Optional.of(move);
             }
         }
         return Optional.empty();
@@ -104,7 +104,12 @@ public class Game {
      *         {@link #legalMoves()}
      */
     public void play(Move move) {
-        throw new UnsupportedOperationException("M3: implement Game.play");
+        if (!legalMoves().contains(move)){
+            throw new IllegalArgumentException("Illegal move: " + move);
+        }
+        board.apply(move);
+        history.add(move);
+        sideToMove = sideToMove.opposite();
     }
 
     /**
@@ -114,6 +119,12 @@ public class Game {
      * was captured. In Week 10 this becomes the Command pattern proper.
      */
     public Optional<Move> undoLastMove() {
-        throw new UnsupportedOperationException("M3: implement Game.undoLastMove");
+        if (history().isEmpty()){
+            return Optional.empty();
+        }
+        Move lastMove = history.removeLast();
+        board.undo(lastMove);
+        sideToMove = sideToMove.opposite();
+        return Optional.of(lastMove);
     }
 }
