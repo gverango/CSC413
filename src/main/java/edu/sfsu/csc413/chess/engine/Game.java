@@ -87,10 +87,6 @@ public class Game {
      * simply typed something they cannot play — and it makes the caller deal
      * with that case.
      */
-    //walk legalMoves(), return the first whose toString()
-    //equals the notation ignoring case, wrapped in an Optional;
-    //Optional.empty() if none. Every other test plays its moves
-    //through this method, so it comes before play
     public Optional<Move> findLegalMove(String notation) {
         for (Move move : legalMoves()) {
             if (move.toString().equalsIgnoreCase(notation)) {
