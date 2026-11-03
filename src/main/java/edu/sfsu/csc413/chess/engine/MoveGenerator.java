@@ -31,15 +31,23 @@ public final class MoveGenerator {
 
     private MoveGenerator() {
     }
-
-    public static boolean isInCheck(Board board, Color color){
-        throw new UnsupportedOperationException("isInCheck is unsupported");
+ //Checks if {@code color} 's king is attacked by the opposite color
+    public static boolean isInCheck(Board board, Color color) {
+        Position king = board.kingPosition(color);
+        if (king == null) {
+            return false;
+        }
+        return isAttacked(board, king, color.opposite());
     }
-
-    public static boolean isAttacked(Board board, Position target, Color attacker){
-        throw new UnsupportedOperationException("isAttacked is unsupported");
+// Checks if any piece of color {@code attacker} attacks {@code target}
+    public static boolean isAttacked(Board board, Position target, Color attacker) {
+        for (Position from : board.positionsOf(attacker)) {
+            if (board.pieceAt(from).attacks(board,from,target)) {
+                return true;
+            }
+        }
+        return false;
     }
-
     /**
      * Every move {@code color} may legally play in the given position.
      *
