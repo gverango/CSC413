@@ -10,9 +10,14 @@ public class Board {
     public Board() {
 
     }
-
-    public Position kingPosition(Color color){
-        throw new UnsupportedOperationException("kingPosition is unsupported");
+    // Checks the king's position of color on board and returns that position or null
+    public Position kingPosition(Color color) {
+        for (Position position : positionsOf(color)) {
+            if (pieceAt(position).type() == PieceType.KING) {
+                return position;
+            }
+        }
+        return null;
     }
 
     // Checks a position on board and returns Piece or null
