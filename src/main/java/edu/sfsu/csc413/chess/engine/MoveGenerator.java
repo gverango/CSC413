@@ -32,6 +32,14 @@ public final class MoveGenerator {
     private MoveGenerator() {
     }
 
+    public static boolean isInCheck(Board board, Color color){
+        throw new UnsupportedOperationException("isInCheck is unsupported");
+    }
+
+    public static boolean isAttacked(Board board, Position target, Color attacker){
+        throw new UnsupportedOperationException("isAttacked is unsupported");
+    }
+
     /**
      * Every move {@code color} may legally play in the given position.
      *

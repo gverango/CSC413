@@ -10,6 +10,11 @@ public class Board {
     public Board() {
 
     }
+
+    public Position kingPosition(Color color){
+        throw new UnsupportedOperationException("kingPosition is unsupported");
+    }
+
     // Checks a position on board and returns Piece or null
     public Piece pieceAt(Position position){
         return squares[position.file()][position.rank()];
