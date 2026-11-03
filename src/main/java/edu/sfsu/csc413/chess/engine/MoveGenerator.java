@@ -57,7 +57,16 @@ public final class MoveGenerator {
      * when it tightens.
      */
     public static List<Move> legalMoves(Board board, Color color) {
-        return pseudoLegalMoves(board,color);
+        List<Move> legal = new ArrayList<>();
+        for (Move move : pseudoLegalMoves(board,color)) {
+            board.apply(move);
+            boolean leavesKingInCheck = isInCheck(board,color);
+            board.undo(move);
+            if (!leavesKingInCheck) {
+                legal.add(move);
+            }
+        }
+        return legal;
     }
 
     /**
