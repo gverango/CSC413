@@ -45,8 +45,9 @@ public class Game {
     public GameStatus status() {
         return MoveGenerator.status(board, sideToMove);
     }
+
     public boolean isGameOver(){
-        return status() == GameStatus.CHECKMATE;
+        return status().isGameOver();
     }
 
     public Board board() {

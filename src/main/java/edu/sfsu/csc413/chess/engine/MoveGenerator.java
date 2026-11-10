@@ -39,19 +39,12 @@ public final class MoveGenerator {
     //yes	    no              	CHECKMATE
     //no	    no              	STALEMATE
     public static GameStatus status(Board board, Color sideToMove) {
-        if (isInCheck(board,sideToMove) && legalMoves(board, sideToMove).isEmpty()){
-            return GameStatus.CHECKMATE;
+        boolean inCheck = isInCheck(board, sideToMove);
+        boolean hasMove = !legalMoves(board, sideToMove).isEmpty();
+        if (inCheck) {
+            return hasMove ? GameStatus.CHECK : GameStatus.CHECKMATE;
         }
-        if (isInCheck(board,sideToMove) && !legalMoves(board, sideToMove).isEmpty()){
-            return GameStatus.CHECK;
-        }
-        if (!isInCheck(board,sideToMove) && !legalMoves(board, sideToMove).isEmpty()){
-            return GameStatus.IN_PROGRESS;
-        }
-        if (!isInCheck(board,sideToMove) && legalMoves(board, sideToMove).isEmpty()){
-            return GameStatus.STALEMATE;
-        }
-        throw new UnsupportedOperationException("board status is unknown:"+ sideToMove);
+        return hasMove ? GameStatus.IN_PROGRESS : GameStatus.STALEMATE;
     }
 
     //Checks if {@code color} 's king is attacked by the opposite color

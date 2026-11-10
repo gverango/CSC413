@@ -34,6 +34,9 @@ public class GameController {
      * Greets the player, draws the opening position, and hands control to the
      * view with {@link BoardView#start}.
      */
+    //greet the player (showMessage),
+    // draw the opening position (render), then call view.start(this).
+    // What happens next is the view's decision. The console view calls runLoop() back; a window in M7 will not.
     public void start() {
         throw new UnsupportedOperationException("M6: implement GameController.start");
     }
