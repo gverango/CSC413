@@ -1,4 +1,6 @@
 package edu.sfsu.csc413.chess.model;
+import edu.sfsu.csc413.chess.factory.PieceFactory;
+
 import java.util.ArrayList;
 import java.util.List;
 
@@ -52,7 +54,11 @@ public class Board {
     // lift the piece off `from`, set it down on `to`
     public void apply(Move move) {
         place(move.from(), null);
-        place(move.to(), move.moved());
+        Piece piece = move.moved();
+        if (move.promotesTo() != null) {
+            piece = PieceFactory.create(move.promotesTo(), piece.color());
+        }
+        place(move.to(), piece);
     }
     // put `moved` back on `from`; put `captured` (or null) back on `to`
     public void undo(Move move) {
