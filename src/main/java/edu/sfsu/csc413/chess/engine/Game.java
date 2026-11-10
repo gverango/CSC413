@@ -42,12 +42,11 @@ public class Game {
         this.board = board;
         this.sideToMove = sideToMove;
     }
-
     public GameStatus status() {
-        throw new UnsupportedOperationException("status not ready");
+        return MoveGenerator.status(board, sideToMove);
     }
     public boolean isGameOver(){
-        throw new UnsupportedOperationException("isGameOver is null");
+        return status() == GameStatus.CHECKMATE;
     }
 
     public Board board() {
