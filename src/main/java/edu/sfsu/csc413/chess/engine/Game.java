@@ -43,6 +43,13 @@ public class Game {
         this.sideToMove = sideToMove;
     }
 
+    public GameStatus status() {
+        throw new UnsupportedOperationException("status not ready");
+    }
+    public boolean isGameOver(){
+        throw new UnsupportedOperationException("isGameOver is null");
+    }
+
     public Board board() {
         return board;
     }

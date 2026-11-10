@@ -31,7 +31,13 @@ public final class MoveGenerator {
 
     private MoveGenerator() {
     }
- //Checks if {@code color} 's king is attacked by the opposite color
+
+    //Checks if {@code color} is in any particular win-lose state.
+    public static GameStatus status(Board board, Color sideToMove) {
+        throw new UnsupportedOperationException("status is not ready");
+    }
+
+    //Checks if {@code color} 's king is attacked by the opposite color
     public static boolean isInCheck(Board board, Color color) {
         Position king = board.kingPosition(color);
         if (king == null) {
