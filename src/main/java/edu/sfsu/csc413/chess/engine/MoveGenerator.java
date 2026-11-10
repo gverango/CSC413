@@ -33,8 +33,25 @@ public final class MoveGenerator {
     }
 
     //Checks if {@code color} is in any particular win-lose state.
+    //In check?	Has a legal move?	Status
+    //no	    yes             	IN_PROGRESS
+    //yes	    yes             	CHECK
+    //yes	    no              	CHECKMATE
+    //no	    no              	STALEMATE
     public static GameStatus status(Board board, Color sideToMove) {
-        throw new UnsupportedOperationException("status is not ready");
+        if (isInCheck(board,sideToMove) && legalMoves(board, sideToMove).isEmpty()){
+            return GameStatus.CHECKMATE;
+        }
+        if (isInCheck(board,sideToMove) && !legalMoves(board, sideToMove).isEmpty()){
+            return GameStatus.CHECK;
+        }
+        if (!isInCheck(board,sideToMove) && !legalMoves(board, sideToMove).isEmpty()){
+            return GameStatus.IN_PROGRESS;
+        }
+        if (!isInCheck(board,sideToMove) && legalMoves(board, sideToMove).isEmpty()){
+            return GameStatus.STALEMATE;
+        }
+        throw new UnsupportedOperationException("board status is unknown:"+ sideToMove);
     }
 
     //Checks if {@code color} 's king is attacked by the opposite color
