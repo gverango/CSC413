@@ -238,7 +238,14 @@ public class SoftClubView implements BoardView {
             // Ask here, and only for a real promotion. The controller asks
             // promotionChoice() for every unmatched four-letter move, illegal
             // ones included, so a dialog there would open on any bad click.
-            notation += askPromotion().symbol();
+            PieceType choice = askPromotion();
+            if (choice == null) {
+                // Closing the dialog takes the move back into the hand: the
+                // pawn stays selected and nothing is sent. (Idea from runs 2 and 3.)
+                redraw();
+                return;
+            }
+            notation += choice.symbol();
         }
         selected = null;
         // Drop a stale "not a legal move" before the controller reports a new one.
@@ -338,11 +345,11 @@ public class SoftClubView implements BoardView {
     }
 
     /**
-     * Asks which piece a promoting pawn becomes. Closing the dialog keeps the
-     * queen, which is what {@link BoardView#promotionChoice} already does.
+     * Asks which piece a promoting pawn becomes, or null if the player closed
+     * the dialog without choosing.
      */
     private PieceType askPromotion() {
-        PieceType[] chosen = { PieceType.QUEEN };
+        PieceType[] chosen = { null };
         JDialog dialog = new JDialog(frame, "promote", true);
         dialog.setDefaultCloseOperation(WindowConstants.DISPOSE_ON_CLOSE);
 
