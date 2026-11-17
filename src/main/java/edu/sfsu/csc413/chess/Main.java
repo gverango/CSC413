@@ -13,6 +13,8 @@ public final class Main {
         BoardView view;
         if (args.length > 0 && args[0].equals("emoji")) {
             view = new EmojiView();
+        } else if (args.length > 0 && args[0].equals("ansi")) {
+            view = new AnsiView();
         } else {
             view = new ConsoleView();
         }
