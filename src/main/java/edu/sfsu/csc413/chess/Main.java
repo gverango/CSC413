@@ -15,6 +15,8 @@ public final class Main {
             view = new EmojiView();
         } else if (args.length > 0 && args[0].equals("ansi")) {
             view = new AnsiView();
+        } else if (args.length > 0 && args[0].equals("swing")) {
+            view = new SoftClubView();
         } else {
             view = new ConsoleView();
         }
