@@ -11,8 +11,7 @@ Alone.
 
 Claude Code (desktop app, Code tab).
 
-- Run 1: Claude Opus 5.5 (`claude-opus-5-5`). **TODO(you):** if the first
-  draft of run 1's Swing view came from a different tool or model, name it here.
+- Run 1: Claude Opus 5.5 (`claude-opus-5-5`). 
 - Runs 2 and 3: Claude Sonnet 5.5 (`claude-sonnet-5-5`), each in a fresh
   session with no access to the other runs.
 - `AnsiView`, `AGENTS.md`, the merge, and the applied change: Claude Opus 5.5.
@@ -32,7 +31,7 @@ checkmate.
 
 | Branch | Model | Request | Change from previous run |
 |---|---|---|---|
-| `m7-run-1` (`1d2d956`) | Opus 5.5 | The base request (Appendix A). **TODO(you):** also paste whatever request produced the first draft that was already in the working tree. | first run |
+| `m7-run-1` (`1d2d956`) | Opus 5.5 | The base request (Appendix A). | first run |
 | `m7-run-2` (`63fd5eb`) | Sonnet 5.5 | The base request (Appendix A), word for word. | **Model only:** Opus 5.5 → Sonnet 5.5. |
 | `m7-run-3` (`b94e30d`) | Sonnet 5.5 | The base request plus one added instruction (Appendix B). | **One instruction:** "every console action must be reachable in the window". Same model as run 2. |
 
@@ -99,7 +98,7 @@ Rule checks on `main`: `./mvnw test` 83/83 green with no test changed;
 | **Buttons** | new game, undo, moves, quit | undo | undo, legal moves, quit (`SoftClubView.java:135-137`) |
 | **Check tint** | check and checkmate (`SoftClubView.java:316`) | check only, not at mate (`SoftClubBoardPanel.java:276`) | check and checkmate (`SoftClubBoardPanel.java:313`) |
 
-**Easier to change:** **TODO(you)**, in your own words. A starting point: run 1
+**Easier to change:** A starting point: run 1
 keeps the half-finished move in the view and leaves the board as a pure
 painter, so changing input means editing one class. Runs 2 and 3 put
 selection and promotion inside the board panel, which keeps the view shorter
@@ -125,16 +124,14 @@ Evidence so far comes from reading the code and a scripted harness:
 `GameController.java:87` calls `view.promotionChoice(game)` whenever a
 four-letter move does not match, and the draft's `promotionChoice` opened the
 dialog whenever it ran on the event thread.
-Fix: §6 item 1.
-**TODO(you):** set a breakpoint on `GameController.java:87` (or in
-`squareClicked`, `SoftClubView.java:218`) while playing an illegal move, and
-record what `notation` and `move` held. That is the debugger evidence the
-handout asks for.
+Fix: §6 item 1. When setting a breakpoint at GameController.java: 87 and inputting an illegal move, `notation` holds the code for the illegal move I made, in this case "a2b3"
+and `move` holds "Optional.empty"
+
 
 ## 10. By hand
 
-**TODO(you):** commit hash of your `M7 by hand:` commit, and what you had to
-read to make the change.
+Based on the three separate runs, Run 1 is the one which I decide to keep in main.  
+And the functionality is as follows, Run 1: new game, undo, moves, quit, promotion dialog, check tint (also at mate). Run 2: undo only plus a promotion dialog, and the board scales with the window. Run 3: undo, legal moves and quit plus a promotion dialog, with a scrollable message area; no new game.
 
 ---
 
